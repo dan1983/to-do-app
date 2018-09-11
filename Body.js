@@ -11,7 +11,12 @@ export default class Body extends Component {
         <Text> Body </Text>
         <FlatList
           data={this.props.arrayTareas}
-          renderItem={({ item }) => <Tarea item={item.texto} />}
+          renderItem={({ item }) => (
+            <Tarea
+              item={item}
+              eliminar={this.props.eliminar}
+            />
+          )}
         />
       </View>
     );

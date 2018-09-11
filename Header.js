@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   texto: {
     flex: 1,
-    paddingHorizontal: 1,
+    paddingHorizontal: 16,
     fontSize: 24,
   },
 
