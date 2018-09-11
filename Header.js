@@ -7,10 +7,13 @@ export default class Header extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> Header </Text>
         <TextInput
-          placeholder="escribe tu texto"
-          onChangeText={this.props.establecerTexto}
+          style={styles.texto}
+          placeholder="Useless Placeholder....."
+          onChangeText={this.props.cambiarTexto}
+          onSubmitEditing={this.props.agregar}
+          value={this.props.texto}
+
         />
       </View>
     );
@@ -21,12 +24,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: '#FF5722',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   texto: {
-    padding:'0 0 0 10';
-
-  }
+    flex: 1,
+    paddingHorizontal: 1,
+    fontSize: 24,
+  },
 
 });

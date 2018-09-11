@@ -13,14 +13,26 @@ export default class App extends React.Component {
   }
 
   establecerTexto = (value) => {
-    console.log(value);
+    this.setState({ texto: value });
+  }
+
+  agreagartarea = () => {
+    this.setState({
+      tareas: [...this.state.tareas, { texto: this.state.texto, key: Date.now().toString() }],
+      texto: '',
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Header cambiarTexto={this.establecerTexto} />
-        <Body />
+        <Header
+          texto={this.state.texto}
+          cambiarTexto={this.establecerTexto}
+          agregar={this.agreagartarea}
+        />
+        <Text>{this.state.texto}</Text>
+        <Body arrayTareas={this.state.tareas} />
       </View>
     );
   }
@@ -30,7 +42,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
 });

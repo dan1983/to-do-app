@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import {
+  Text, StyleSheet, View, FlatList,
+} from 'react-native';
+import Tarea from './Tarea';
 
 export default class Body extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text> Body </Text>
+        <FlatList
+          data={this.props.arrayTareas}
+          renderItem={({ item }) => <Tarea item={item.texto} />}
+        />
       </View>
     );
   }
@@ -14,9 +21,8 @@ export default class Body extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 9,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f1f2f6',
+
   },
 
 });
