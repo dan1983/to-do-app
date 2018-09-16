@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet, Text, View, AsyncStorage,
+} from 'react-native';
 import Header from './Header';
 import Body from './Body';
 
@@ -12,16 +14,47 @@ export default class App extends React.Component {
     };
   }
 
+
+  componentDidMount() {
+    this.recueperarTelefono();
+  }
+
   establecerTexto = (value) => {
     this.setState({ texto: value });
   }
 
   agreagartarea = () => {
+    const nuevasTareas = [...this.state.tareas, { texto: this.state.texto, key: Date.now().toString() }];
+    this.guardarEnTelefono(nuevasTareas);
     this.setState({
-      tareas: [...this.state.tareas, { texto: this.state.texto, key: Date.now().toString() }],
+      tareas: nuevasTareas,
       texto: '',
     });
   }
+
+  guardarEnTelefono = (nuevasTareas) => {
+    AsyncStorage.setItem('@AppCurso:tareas', JSON.stringify(
+      nuevasTareas,
+    )).then((valor) => {
+      console.log(valor);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  recueperarTelefono = () => {
+    AsyncStorage.getItem('@AppCurso:tareas').then((valor) => {
+      const nuevasTareas = JSON.parse(valor);
+      if (valor != null) {
+        this.setState({
+          tareas: nuevasTareas,
+        });
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
 
   eliminarTareas = (id) => {
     console.log(id);
@@ -29,7 +62,7 @@ export default class App extends React.Component {
       tareas => tareas.key !== id,
     );
 
-    console.log(nuevasTareas);
+    this.guardarEnTelefono(nuevasTareas);
 
     this.setState({
       tareas: nuevasTareas,
